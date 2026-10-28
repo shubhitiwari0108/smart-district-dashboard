@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Citizen Dashboard</title>
+<style>
+body{margin:0;font-family:Arial;background:#f2f7fc;color:#24384d}header{background:#0756a8;color:white;padding:22px 6%;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}a{color:#0756a8}header a{color:white}main{padding:25px 6%}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}.card,.box{background:white;padding:20px;border-radius:10px;margin-bottom:18px;box-shadow:0 4px 15px #e0e8f0}.card a{display:inline-block;margin-top:8px}table{width:100%;border-collapse:collapse;background:white}th,td{text-align:left;padding:11px;border-bottom:1px solid #e1e8ef}th{background:#e5f1ff} .table-wrap{overflow-x:auto}.badge{background:#e5f1ff;padding:5px 9px;border-radius:12px}li{margin:12px 0}
+</style>
+</head>
+<body>
+<header>
+  <div><h2>Citizen Dashboard</h2><p>Welcome, {{ session.user }}</p></div>
+  <div><a href="/">Home</a> | <a href="/logout">Logout</a></div>
+</header>
+<main>
+<div class="cards">
+  <div class="card"><h3>Applications</h3><p>{{ applications|length }}</p><a href="/apply">Apply for Service</a></div>
+  <div class="card"><h3>Grievances</h3><p>{{ grievances|length }}</p><a href="/grievance">Register Grievance</a></div>
+  <div class="card"><h3>Notifications</h3><p>{{ unread_notifications }} unread</p></div>
+</div>
+
+<div class="box">
+<h2>Quick Services</h2>
+<p><a href="/apply">Apply for a service</a> ·
+<a href="/track">Track application</a> ·
+<a href="/grievance">Register grievance</a> ·
+<a href="/track-grievance">Track grievance</a></p>
+</div>
+
+<div class="box">
+<h2>My Applications</h2>
+<div class="table-wrap">
+<table><tr><th>ID</th><th>Service</th><th>Status</th></tr>
+{% for item in applications %}
+<tr><td>APP{{ item.id }}</td><td>{{ item.service }}</td><td><span class="badge">{{ item.status }}</span></td></tr>
+{% else %}
+<tr><td colspan="3">No applications submitted yet.</td></tr>
+{% endfor %}
+</table>
+</div>
+</div>
+
+<div class="box">
+<h2>My Grievances</h2>
+<div class="table-wrap">
+<table><tr><th>ID</th><th>Subject</th><th>Status</th></tr>
+{% for item in grievances %}
+<tr><td>GRV{{ item.id }}</td><td>{{ item.subject }}</td><td>{{ item.status }}</td></tr>
+{% else %}
+<tr><td colspan="3">No grievances submitted yet.</td></tr>
+{% endfor %}
+</table>
+</div>
+</div>
+
+<div class="box">
+<h2>Notifications 🔔</h2>
+{% for item in notifications %}
+<div style="padding:12px;border-bottom:1px solid #eee">
+  <p>{{ item.message }}</p>
+  {% if not item.is_read %}
+  <a href="/notifications/read/{{ item.id }}">Mark as read</a>
+  {% else %}<small>Read</small>{% endif %}
+</div>
+{% else %}
+<p>No notifications yet.</p>
+{% endfor %}
+</div>
+
+<div class="box">
+<h2>District Announcements</h2>
+{% for item in announcements %}
+<h3>{{ item.title }}</h3><p>{{ item.message }}</p>
+{% else %}
+<p>No announcements published yet.</p>
+{% endfor %}
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart District | Digital Services</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:#19324b;background:#f4f8fd}
+nav{background:white;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #dce6f0;gap:15px;flex-wrap:wrap}
+.logo{font-size:22px;font-weight:bold;color:#0756a8}nav a,.btn{color:#0756a8;text-decoration:none;font-weight:bold;margin-left:15px}
+.btn{display:inline-block;background:#0756a8;color:white;padding:12px 20px;border-radius:7px;margin:6px 5px 0 0}
+.hero{padding:70px 8%;background:linear-gradient(120deg,#e0f0ff,white);display:flex;justify-content:space-between;align-items:center;gap:35px;flex-wrap:wrap}
+.intro{max-width:600px}.intro h1{font-size:clamp(34px,5vw,52px);color:#073e78;margin:12px 0}.intro p{line-height:1.8;color:#52677b}
+.panel{background:white;padding:25px;border-radius:14px;box-shadow:0 8px 30px #dce6f0;min-width:260px}
+main section{padding:55px 8%}h2{color:#073e78}.center{text-align:center}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{display:block;background:white;padding:23px;border-radius:12px;text-decoration:none;color:#19324b;border:1px solid #e0eaf4;box-shadow:0 5px 16px #e4ebf3}
+.card:hover{transform:translateY(-3px)}.card h3{color:#0756a8}.card p{line-height:1.6;color:#637487}
+.notice{background:#fff;padding:16px;margin:12px 0;border-left:4px solid #087dbb;border-radius:6px}
+footer{background:#062d54;color:white;padding:25px;text-align:center}
+@media(max-width:600px){nav{padding:16px}nav a{margin-left:8px}.hero{padding:45px 6%}main section{padding:40px 6%}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">🏛 Smart District</div>
+  <div>
+    <a href="#services">Services</a>
+    <a href="#announcements">Notices</a>
+    <a href="#about">About</a>
+    <a class="btn" href="/login">Login</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="intro">
+    <p><strong>DIGITAL GOVERNANCE PLATFORM</strong></p>
+    <h1>One Platform for District Services</h1>
+    <p>Apply for services, track applications, submit grievances and access district announcements through one convenient digital portal.</p>
+    <a class="btn" href="/login">Citizen / Official Login</a>
+    <a class="btn" href="#services" style="background:white;color:#0756a8;border:1px solid #0756a8">Explore Services</a>
+  </div>
+  <div class="panel">
+    <h2>Digital Services</h2>
+    <p>✓ Online applications</p>
+    <p>✓ Application status tracking</p>
+    <p>✓ Grievance management</p>
+    <p>✓ Public announcements</p>
+    <p>✓ Status notifications</p>
+  </div>
+</header>
+
+<main>
+<section id="services">
+  <div class="center">
+    <h2>Our Online Services</h2>
+    <p>Choose a service. Login is required to access citizen functions.</p>
+  </div>
+  <div class="cards">
+    <a class="card" href="/login"><h3>📝 Apply for Service</h3><p>Submit a district service application after citizen login.</p></a>
+    <a class="card" href="/login"><h3>🔎 Track Application</h3><p>Check the status of your submitted application.</p></a>
+    <a class="card" href="/login"><h3>📢 Register Grievance</h3><p>Submit an issue for the administration to review.</p></a>
+    <a class="card" href="/login"><h3>📋 Track Grievance</h3><p>Check progress on your grievance.</p></a>
+    <a class="card" href="#announcements"><h3>📣 Announcements</h3><p>Read public notices published by officials.</p></a>
+    <a class="card" href="/login"><h3>🔔 Notifications</h3><p>View updates after signing in to the citizen portal.</p></a>
+  </div>
+</section>
+
+<section id="announcements" style="background:#eaf4ff">
+  <h2>Latest Announcements</h2>
+  {% if announcements %}
+    {% for item in announcements %}
+      <div class="notice">
+        <strong>{{ item.title }}</strong>
+        <p>{{ item.message }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No announcements have been published yet.</p>
+  {% endif %}
+</section>
+
+<section id="about">
+  <div class="center">
+    <h2>About Smart District</h2>
+    <p>A student e-governance project demonstrating online service requests, grievance tracking and administrative workflows.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>Citizen Portal</h3><p>Submit and track personal requests.</p></div>
+    <div class="card"><h3>Official Portal</h3><p>Review applications and resolve grievances.</p></div>
+    <div class="card"><h3>Technology</h3><p>Python, Flask, SQLite, HTML and CSS.</p></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Smart District Digital Services — Academic Project</p>
+  <p>Demonstration portal; not an official government website.</p>
+</footer>
+</body>
+</html>

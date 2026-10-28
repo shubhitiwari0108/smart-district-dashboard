@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Track Application</title>
+<style>
+body{font-family:Arial;background:#edf5ff;padding:20px}.box{max-width:600px;margin:35px auto;background:white;padding:28px;border-radius:12px}input{width:100%;padding:12px;box-sizing:border-box;border:1px solid #ccd8e5}button{padding:12px 20px;margin-top:12px;background:#0756a8;color:white;border:0;border-radius:6px}a{color:#0756a8}.error{color:#b42318}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>Track Application</h1>
+<form method="POST">
+<label>Application ID (example: APP1)</label>
+<input name="application_id" placeholder="APP1 or 1" required>
+<button type="submit">Track Status</button>
+</form>
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+{% if application %}
+<h2>Application Details</h2>
+<p><b>ID:</b> APP{{ application.id }}</p>
+<p><b>Name:</b> {{ application.name }}</p>
+<p><b>Service:</b> {{ application.service }}</p>
+<p><b>Status:</b> {{ application.status }}</p>
+<p><b>Description:</b> {{ application.description }}</p>
+{% endif %}
+<p><a href="/citizen">Back to Dashboard</a></p>
+</div>
+</body>
+</html>

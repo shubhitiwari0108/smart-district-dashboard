@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Official Dashboard</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f2f7fc;color:#24384d}header{background:#073e78;color:white;padding:22px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}header a{color:white}main{padding:25px 5%}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}.card,.section{background:white;padding:20px;border-radius:10px;margin-bottom:20px;box-shadow:0 4px 15px #e0e8f0}.stats strong{font-size:27px;color:#0756a8}h2{color:#0756a8}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:650px}td,th{text-align:left;padding:11px;border-bottom:1px solid #e0e8f0}th{background:#e5f1ff}button,.action{padding:8px 11px;background:#0756a8;color:white;border:0;border-radius:5px;text-decoration:none;cursor:pointer}.reject{background:#b42318}input,textarea{padding:10px;width:100%;margin:7px 0 12px;border:1px solid #ccd8e5;border-radius:5px}.resolve{color:#087443}p{line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+<div><h1>Official Administration Portal</h1><p>Welcome, {{ session.user }}</p></div>
+<div><a href="/">Public Home</a> | <a href="/logout">Logout</a></div>
+</header>
+<main>
+<div class="stats">
+<div class="card"><p>Total Applications</p><strong>{{ stats.total_applications }}</strong></div>
+<div class="card"><p>Pending Applications</p><strong>{{ stats.pending_applications }}</strong></div>
+<div class="card"><p>Approved Applications</p><strong>{{ stats.approved_applications }}</strong></div>
+<div class="card"><p>Total Grievances</p><strong>{{ stats.total_grievances }}</strong></div>
+<div class="card"><p>Resolved Grievances</p><strong>{{ stats.resolved_grievances }}</strong></div>
+</div>
+
+<div class="section">
+<h2>Publish Announcement</h2>
+<form method="POST" action="/announcement">
+<label>Announcement Title</label><input name="title" required>
+<label>Announcement Message</label><textarea name="message" rows="3" required></textarea>
+<button type="submit">Publish</button>
+</form>
+<h3>Published Announcements</h3>
+{% for item in announcements %}
+<p><b>{{ item.title }}</b> — {{ item.message }}
+<form method="POST" action="/announcement/{{ item.id }}/delete" style="display:inline">
+<button class="reject" type="submit">Delete</button>
+</form></p>
+{% else %}
+<p>No announcements yet.</p>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Manage Applications</h2>
+<div class="table-wrap">
+<table>
+<tr><th>ID</th><th>Applicant</th><th>Service</th><th>Mobile</th><th>Status</th><th>Action</th></tr>
+{% for item in applications %}
+<tr>
+<td>APP{{ item.id }}</td>
+<td>{{ item.name }}</td>
+<td>{{ item.service }}</td>
+<td>{{ item.mobile }}</td>
+<td>{{ item.status }}</td>
+<td>
+{% if item.status == 'Pending' %}
+<a class="action" href="/application/{{ item.id }}/Approved">Approve</a>
+<a class="action reject" href="/application/{{ item.id }}/Rejected">Reject</a>
+{% else %}
+Completed
+{% endif %}
+</td>
+</tr>
+{% else %}
+<tr><td colspan="6">No applications yet.</td></tr>
+{% endfor %}
+</table>
+</div>
+</div>
+
+<div class="section">
+<h2>Manage Grievances</h2>
+<div class="table-wrap">
+<table>
+<tr><th>ID</th><th>Citizen</th><th>Subject</th><th>Description</th><th>Status</th><th>Action</th></tr>
+{% for item in grievances %}
+<tr>
+<td>GRV{{ item.id }}</td>
+<td>{{ item.username }}</td>
+<td>{{ item.subject }}</td>
+<td>{{ item.description }}</td>
+<td>{{ item.status }}</td>
+<td>
+{% if item.status != 'Resolved' %}
+<a class="action" href="/grievance/{{ item.id }}/resolve">Resolve</a>
+{% else %}
+<span class="resolve">Resolved</span>
+{% endif %}
+</td>
+</tr>
+{% else %}
+<tr><td colspan="6">No grievances yet.</td></tr>
+{% endfor %}
+</table>
+</div>
+</div>
+</main>
+</body>
+</html>

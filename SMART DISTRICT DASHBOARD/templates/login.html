@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login | Smart District</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#edf5ff;min-height:100vh;display:grid;place-items:center;padding:20px}
+.box{background:white;padding:32px;width:100%;max-width:410px;border-radius:14px;box-shadow:0 10px 35px #d2e1f0}
+h1{color:#0756a8}label{display:block;margin:14px 0 6px}input,select{width:100%;padding:12px;border:1px solid #ccd8e5;border-radius:6px}
+button,.btn{display:block;width:100%;padding:13px;margin-top:18px;border:0;border-radius:6px;background:#0756a8;color:white;text-align:center;text-decoration:none;font-weight:bold;cursor:pointer}
+.error{color:#b42318;background:#fff0ee;padding:10px;border-radius:6px}
+.small{color:#627487;font-size:14px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Smart District</h1>
+  <p>Sign in to your portal</p>
+
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+  <form method="POST" action="/login">
+    <label for="username">Username</label>
+    <input id="username" name="username" required autocomplete="username">
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required autocomplete="current-password">
+
+    <label for="role">Select portal</label>
+    <select id="role" name="role" required>
+      <option value="citizen">Citizen</option>
+      <option value="admin">Official / Admin</option>
+    </select>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <p class="small">Demo citizen: citizen / 1234</p>
+  <p class="small">Demo official: admin / 1234</p>
+  <a class="btn" href="/">Back to Home</a>
+</div>
+</body>
+</html>
